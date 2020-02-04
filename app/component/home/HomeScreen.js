@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Button, ScrollView, ActivityIndicator } from 'react-native';
+import { Text, View, ScrollView, ActivityIndicator, StyleSheet } from 'react-native';
 import HorizontalMoviesView from '../movies/HorizontalMoviesView';
 
 export default class HomeScreen extends React.Component {
@@ -8,7 +8,6 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.state = { isLoading: true }
   }
-
 
   componentDidMount() {
     fetch('https://api.themoviedb.org/3/movie/now_playing?api_key=69b647428d7297b0b48fefdcd076b625&language=en-US&page=1')
@@ -60,32 +59,41 @@ export default class HomeScreen extends React.Component {
 
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <Text style={{ textAlign: 'center' }}>LATEST MOVIES</Text>
+        <Text style={styles.text}>LATEST MOVIES</Text>
         <HorizontalMoviesView
           style={{ height: 100 }}
           movies={this.state.latestmovies}
           navigation={this.props.navigation}
           detailScreen={"HomeDetails"}
         />
-        <Text style={{ textAlign: 'center' }}>POPULAR MOVIES</Text>
+        <Text style={styles.text}>POPULAR MOVIES</Text>
         <HorizontalMoviesView
           style={{ height: 100 }}
           movies={this.state.popularmovies}
           navigation={this.props.navigation}
           detailScreen={"HomeDetails"}
         />
-        <Text style={{ textAlign: 'center' }}>TOP RATED MOVIES</Text>
+        <Text style={styles.text}>TOP RATED MOVIES</Text>
         <HorizontalMoviesView
           style={{ height: 100 }}
           movies={this.state.topmovies}
           navigation={this.props.navigation}
           detailScreen={"HomeDetails"}
         />
-        <Button
-          title="Go to Movies"
-          onPress={() => this.props.navigation.navigate('Movies')}
-        />
       </ScrollView>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  text: {
+    textAlign: 'center',
+    color: '#c4b96c',
+    backgroundColor: '#1a1919',
+    paddingTop: 36,
+    paddingBottom: 6,
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+    marginTop: 3,
+  }
+})

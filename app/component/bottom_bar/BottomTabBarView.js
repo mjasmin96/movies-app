@@ -47,8 +47,10 @@ export default BottomTabBarView = createBottomTabNavigator(
       tabBarIcon: ({tintColor}) => getTabBarIcon(navigation, tintColor),
     }),
     tabBarOptions: {
-      activeTintColor: 'tomato',
-      inactiveTintColor: 'gray',
+      activeBackgroundColor : 'tomato',
+      activeTintColor: '#fff',
+      inactiveTintColor: '#c4b96c',
+      style: {backgroundColor: 'black' }
     },
   },
 );
