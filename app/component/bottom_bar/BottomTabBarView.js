@@ -1,6 +1,6 @@
 import React from 'react';
-import {createStackNavigator} from 'react-navigation-stack';
-import {createBottomTabNavigator} from 'react-navigation-tabs';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../home/HomeScreen';
 import SettingsView from '../settings/SettingsView';
@@ -10,7 +10,29 @@ import MovieDetailsVeiw from '../movies/MovieDetailsVeiw';
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   HomeDetails: MovieDetailsVeiw,
+},{
+  
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: 'black',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      color: "white"
+    },
+  },
 });
+
+HomeScreen.navigationOptions = {
+  title: 'Home'
+};
+
+MovieDetailsVeiw.navigationOptions = ({ navigation }) => {
+  return {
+    title: navigation.getParam('movie').title
+  };
+};
 
 const SettingsStack = createStackNavigator({
   Settings: SettingsView,
@@ -22,7 +44,7 @@ const MoviesStack = createStackNavigator({
 });
 
 const getTabBarIcon = (navigation, tintColor) => {
-  const {routeName} = navigation.state;
+  const { routeName } = navigation.state;
   let IconComponent = Ionicons;
   let iconName;
   if (routeName === 'Home') {
@@ -43,14 +65,21 @@ export default BottomTabBarView = createBottomTabNavigator(
     Settings: SettingsStack,
   },
   {
-    defaultNavigationOptions: ({navigation}) => ({
-      tabBarIcon: ({tintColor}) => getTabBarIcon(navigation, tintColor),
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ tintColor }) => getTabBarIcon(navigation, tintColor),
+      headerStyle: {
+        backgroundColor: '#f4511e',
+      },
+      headerTintColor: '#000',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
     }),
     tabBarOptions: {
-      activeBackgroundColor : 'tomato',
+      activeBackgroundColor: '#EF6C00',
+      inactiveBackgroundColor: 'black',
       activeTintColor: '#fff',
-      inactiveTintColor: '#c4b96c',
-      style: {backgroundColor: 'black' }
+      inactiveTintColor: '#c4b96c'
     },
   },
 );

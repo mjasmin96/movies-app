@@ -3,7 +3,7 @@ import { Text, View, ScrollView, ActivityIndicator, StyleSheet } from 'react-nat
 import HorizontalMoviesView from '../movies/HorizontalMoviesView';
 
 export default class HomeScreen extends React.Component {
-
+  
   constructor(props) {
     super(props);
     this.state = { isLoading: true }
@@ -66,14 +66,14 @@ export default class HomeScreen extends React.Component {
           navigation={this.props.navigation}
           detailScreen={"HomeDetails"}
         />
-        <Text style={styles.text}>POPULAR MOVIES</Text>
+        <Text style={[styles.text, styles.text_margin]}>POPULAR MOVIES</Text>
         <HorizontalMoviesView
           style={{ height: 100 }}
           movies={this.state.popularmovies}
           navigation={this.props.navigation}
           detailScreen={"HomeDetails"}
         />
-        <Text style={styles.text}>TOP RATED MOVIES</Text>
+        <Text style={[styles.text, styles.text_margin]}>TOP RATED MOVIES</Text>
         <HorizontalMoviesView
           style={{ height: 100 }}
           movies={this.state.topmovies}
@@ -90,10 +90,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#c4b96c',
     backgroundColor: '#1a1919',
-    paddingTop: 36,
+    paddingTop: 24,
     paddingBottom: 6,
     fontWeight: 'bold',
     fontStyle: 'italic',
-    marginTop: 3,
+  },
+  text_margin: {
+    marginTop: 3
   }
 })
