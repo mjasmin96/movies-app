@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View, ActivityIndicator, FlatList } from 'react-native';
+import { Text, View, ActivityIndicator, StyleSheet, Image } from 'react-native';
+import { Card } from 'react-native-shadow-cards';
 
 export default class MovieDetailsVeiw extends React.Component {
 
@@ -38,17 +39,55 @@ export default class MovieDetailsVeiw extends React.Component {
     const movie = this.state.moviedetails;
 
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', margin: 36 }}>
-        <Text style={{ fontWeight: 'bold', margin: 10 }}>OVERVIEW</Text>
-        <Text>{movie.overview}</Text>
-        <Text style={{ fontWeight: 'bold', margin: 10 }}>GENRES</Text>
-        <Text>{movie.genres.map((genre, index) => {
-          if (index == movie.genres.length - 1) {
-            return genre.name;
-          }
-          return genre.name + ", ";
-          })}</Text>
+      <View style={{
+        flex: 1,
+        backgroundColor: '#1a1919'
+      }}>
+        <View style={{ flex: 1 }}>
+          <Image
+            style={{ width: 'auto', height: 260 }}
+            source={{ uri: 'http://image.tmdb.org/t/p/w185/' + movie.poster_path }}
+          />
+          <View style={{ position: 'absolute', marginTop: 240, marginHorizontal: 20 }}>
+            <Card style={{ padding: 8 }}>
+              <Text style={{ color: '#c4b96c', fontSize: 20, fontWeight: 'bold', margin: 5 }}>{movie.title}</Text>
+              <Text style={{ margin: 5 }}>{movie.genres.map((genre, index) => {
+                if (index == movie.genres.length - 1) {
+                  return genre.name;
+                }
+                return genre.name + ", ";
+              })}</Text>
+            </Card>
+          </View>
+        </View>
+        <View style={{ flex: 1 / 4, flexDirection: 'row',marginTop: 100, marginHorizontal: 10, justifyContent: 'space-between' }}>
+          <View>
+            <Text style={{ color: '#c4b96c', fontWeight: 'bold', textAlign: 'left' }}>Budget</Text>
+            <Text style={{ color: '#8BC34A', textAlign: 'left' }}>{movie.budget}$</Text>
+          </View>
+          <View>
+            <Text style={{ color: '#c4b96c', fontWeight: 'bold', textAlign: 'center' }}>Popularity</Text>
+            <Text style={{ color: '#8BC34A', textAlign: 'center' }}>{movie.popularity} Views</Text>
+          </View>
+          <View>
+            <Text style={{ color: '#c4b96c', fontWeight: 'bold', textAlign: 'right' }}>Release Date</Text>
+            <Text style={{ color: '#8BC34A', textAlign: 'right' }}>{movie.release_date}</Text>
+          </View>
+        </View>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.ovtext}>OVERVIEW</Text>
+          <Text style={{ color: '#FFF3E0', marginLeft: 10 }}>{movie.overview}</Text>
+        </View>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  ovtext: {
+    fontWeight: 'bold',
+    margin: 10,
+    color: '#c4b96c',
+    textAlign: 'left'
+  }
+})
