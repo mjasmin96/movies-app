@@ -75,6 +75,7 @@ export default class MovieDetailsVeiw extends React.Component {
           flex: 1 / 4,
           flexDirection: 'row',
           marginTop: 100,
+          paddingHorizontal: 16,
           marginHorizontal: 10,
           justifyContent: 'space-between'
         }}>
@@ -88,10 +89,12 @@ export default class MovieDetailsVeiw extends React.Component {
           </View>
           <View>
             <Text style={{ color: '#c4b96c', fontWeight: 'bold', textAlign: 'right' }}>Release Date</Text>
-            <Text style={{ color: '#8BC34A', textAlign: 'right' }}>{Moment(movie.release_date).format('d MMM YYYY')}</Text>
+            <Text style={{ color: '#8BC34A', textAlign: 'right' }}>{Moment(movie.release_date).format('DD MMM YYYY')}</Text>
           </View>
         </View>
-        <View style={{ flex: 1 }}>
+        <View style={{
+          flex: 1, paddingHorizontal: 16
+        }}>
           <Text style={styles.ovtext}>OVERVIEW</Text>
           <Text style={{ color: '#FFF3E0', marginLeft: 10 }}>{movie.overview}</Text>
         </View>

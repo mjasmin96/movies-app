@@ -53,8 +53,6 @@ class MoviesView extends React.Component {
 const Movie = props => (
   <TouchableOpacity
     onPress={() => {
-      console.log("Klik na movie")
-      console.log(props.movie)
       props.navigation.push('Details', {
         movie: props.movie,
       });

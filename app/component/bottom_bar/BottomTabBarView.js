@@ -58,6 +58,12 @@ const MoviesStack = createStackNavigator({
   },
 });
 
+MoviesView.navigationOptions = ({ navigation }) => {
+  return {
+    title: navigation.getParam('genre').name
+  };
+};
+
 MovieCategoriesView.navigationOptions = {
   title: 'Explore'
 };
