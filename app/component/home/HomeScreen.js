@@ -3,7 +3,7 @@ import { Text, View, ScrollView, ActivityIndicator, StyleSheet } from 'react-nat
 import HorizontalMoviesView from '../movies/HorizontalMoviesView';
 
 export default class HomeScreen extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.state = { isLoading: true }
@@ -15,7 +15,7 @@ export default class HomeScreen extends React.Component {
       .then((responseJson) => {
         this.setState({
           isLoading: false,
-          latestmovies: responseJson.results,
+          nowplayingmovies: responseJson.results,
         }, function () { })
       })
       .catch((error) => {
@@ -59,10 +59,10 @@ export default class HomeScreen extends React.Component {
 
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <Text style={styles.text}>LATEST MOVIES</Text>
+        <Text style={styles.text}>NOW PLAYING</Text>
         <HorizontalMoviesView
           style={{ height: 100 }}
-          movies={this.state.latestmovies}
+          movies={this.state.nowplayingmovies}
           navigation={this.props.navigation}
           detailScreen={"HomeDetails"}
         />
@@ -96,6 +96,6 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   text_margin: {
-    marginTop: 3
+    marginTop: 1
   }
 })

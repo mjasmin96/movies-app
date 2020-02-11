@@ -6,12 +6,14 @@ import HomeScreen from '../home/HomeScreen';
 import SettingsView from '../settings/SettingsView';
 import MovieCategoriesView from '../movies/MovieCategoriesView';
 import MovieDetailsVeiw from '../movies/MovieDetailsVeiw';
+import HorizontalMoviesView from '../movies/HorizontalMoviesView';
+import MoviesView from '../movies/MoviesView'
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   HomeDetails: MovieDetailsVeiw,
-},{
-  
+}, {
+
   defaultNavigationOptions: {
     headerStyle: {
       backgroundColor: 'black',
@@ -25,7 +27,7 @@ const HomeStack = createStackNavigator({
 });
 
 HomeScreen.navigationOptions = {
-  title: 'Home'
+  title: 'Home',
 };
 
 MovieDetailsVeiw.navigationOptions = ({ navigation }) => {
@@ -39,9 +41,26 @@ const SettingsStack = createStackNavigator({
 });
 
 const MoviesStack = createStackNavigator({
-  Movies: MovieCategoriesView,
+  Explore: MovieCategoriesView,
+  MoviesfromGenre: MoviesView,
   Details: MovieDetailsVeiw,
+}, {
+
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: 'black',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      color: "white"
+    },
+  },
 });
+
+MovieCategoriesView.navigationOptions = {
+  title: 'Explore'
+};
 
 const getTabBarIcon = (navigation, tintColor) => {
   const { routeName } = navigation.state;
@@ -51,8 +70,8 @@ const getTabBarIcon = (navigation, tintColor) => {
     iconName = `md-home`;
   } else if (routeName === 'Settings') {
     iconName = `md-settings`;
-  } else if (routeName === 'Movies') {
-    iconName = `md-film`;
+  } else if (routeName === 'Explore') {
+    iconName = `md-list`;
   }
 
   return <IconComponent name={iconName} size={28} color={tintColor} />;
@@ -61,7 +80,7 @@ const getTabBarIcon = (navigation, tintColor) => {
 export default BottomTabBarView = createBottomTabNavigator(
   {
     Home: HomeStack,
-    Movies: MoviesStack,
+    Explore: MoviesStack,
     Settings: SettingsStack,
   },
   {

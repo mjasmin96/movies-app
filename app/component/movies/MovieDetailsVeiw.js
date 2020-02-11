@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, ActivityIndicator, StyleSheet, Image } from 'react-native';
 import { Card } from 'react-native-shadow-cards';
+import Moment from 'moment';
 
 export default class MovieDetailsVeiw extends React.Component {
 
@@ -38,6 +39,16 @@ export default class MovieDetailsVeiw extends React.Component {
 
     const movie = this.state.moviedetails;
 
+    function movieconverter() {
+      if (movie.budget > 999 && movie.budget < 999999) {
+        return (movie.budget / 1000) + 'k';
+      }
+      else if (movie.budget > 999999) {
+        return (movie.budget / 1000000) + 'm';
+      }
+      return movie.budget;
+    };
+
     return (
       <View style={{
         flex: 1,
@@ -60,18 +71,24 @@ export default class MovieDetailsVeiw extends React.Component {
             </Card>
           </View>
         </View>
-        <View style={{ flex: 1 / 4, flexDirection: 'row',marginTop: 100, marginHorizontal: 10, justifyContent: 'space-between' }}>
+        <View style={{
+          flex: 1 / 4,
+          flexDirection: 'row',
+          marginTop: 100,
+          marginHorizontal: 10,
+          justifyContent: 'space-between'
+        }}>
           <View>
             <Text style={{ color: '#c4b96c', fontWeight: 'bold', textAlign: 'left' }}>Budget</Text>
-            <Text style={{ color: '#8BC34A', textAlign: 'left' }}>{movie.budget}$</Text>
+            <Text style={{ color: '#8BC34A', textAlign: 'left' }}>{movieconverter(movie.budget)}$</Text>
           </View>
           <View>
-            <Text style={{ color: '#c4b96c', fontWeight: 'bold', textAlign: 'center' }}>Popularity</Text>
-            <Text style={{ color: '#8BC34A', textAlign: 'center' }}>{movie.popularity} Views</Text>
+            <Text style={{ color: '#c4b96c', fontWeight: 'bold', textAlign: 'center' }}>Rating</Text>
+            <Text style={{ color: '#8BC34A', textAlign: 'center' }}>{movie.vote_average} *</Text>
           </View>
           <View>
             <Text style={{ color: '#c4b96c', fontWeight: 'bold', textAlign: 'right' }}>Release Date</Text>
-            <Text style={{ color: '#8BC34A', textAlign: 'right' }}>{movie.release_date}</Text>
+            <Text style={{ color: '#8BC34A', textAlign: 'right' }}>{Moment(movie.release_date).format('d MMM YYYY')}</Text>
           </View>
         </View>
         <View style={{ flex: 1 }}>
@@ -90,4 +107,4 @@ const styles = StyleSheet.create({
     color: '#c4b96c',
     textAlign: 'left'
   }
-})
+});

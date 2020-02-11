@@ -1,19 +1,54 @@
 import * as React from 'react';
-import {movieData} from '../../constants/Movies';
-import {View, Text, FlatList, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
-const MoviesView = props => (
-  <View style={[styles.scene, {backgroundColor: '#3d3d29'}]}>
-    <FlatList
-      data={movieData.filter(function(e) {
-        return e.category == props.category;
-      })}
-      renderItem={({item}) => <Movie movie={item} navigation={props.navigation}/>}
-      keyExtractor={item => item.name}
-    />
-  </View>
-);
+
+class MoviesView extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { isLoading: true }
+  }
+
+  componentDidMount() {
+    console.log(this.props);
+    const genre = this.props.navigation.getParam('genre');
+    fetch('https://api.themoviedb.org/3/discover/movie?api_key=69b647428d7297b0b48fefdcd076b625&language=en-US&with_genres=' + genre.id)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({
+          isLoading: false,
+          movielist: responseJson.results,
+        }, function () { })
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  render() {
+
+    if (this.state.isLoading) {
+      return (
+        <View style={{ flex: 1, padding: 20 }}>
+          <ActivityIndicator />
+        </View>
+      )
+    }
+
+    const movieData = this.state.movielist;
+
+    return(
+    <View style={[styles.scene, { backgroundColor: '#1a1919' }]}>
+      <FlatList
+        data={movieData}
+        renderItem={({ item }) => <Movie movie={item} navigation={this.props.navigation} />}
+        keyExtractor={item => item.id.toString()}
+      />
+    </View>
+    );
+  }
+};
 
 const Movie = props => (
   <TouchableOpacity
@@ -25,11 +60,11 @@ const Movie = props => (
       });
     }}>
     <View style={styles.item}>
-      <Text style={styles.title}>{props.movie.name}</Text>
-      <Text style={styles.title}>{props.movie.year}</Text>
+      <Text style={styles.title}>{props.movie.title}</Text>
+      <Text style={styles.title}>{props.movie.release_date}</Text>
       <Image
-        style={{width: 'auto', height: 450}}
-        source={{uri: props.movie.img}}
+        style={{ width: 'auto', height: 450 }}
+        source={{ uri: 'http://image.tmdb.org/t/p/w185/' + props.movie.poster_path }}
       />
     </View>
   </TouchableOpacity>
