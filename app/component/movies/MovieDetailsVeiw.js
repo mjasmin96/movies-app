@@ -56,8 +56,8 @@ export default class MovieDetailsVeiw extends React.Component {
       }}>
         <View style={{ flex: 1 }}>
           <Image
-            style={{ width: 'auto', height: 260 }}
-            source={{ uri: 'http://image.tmdb.org/t/p/w185/' + movie.poster_path }}
+            style={{ aspectRatio: 16/11 }}
+            source={{ uri: 'http://image.tmdb.org/t/p/w185/' + movie.backdrop_path }}
           />
           <View style={{ position: 'absolute', marginTop: 240, marginHorizontal: 20 }}>
             <Card style={{ padding: 8 }}>

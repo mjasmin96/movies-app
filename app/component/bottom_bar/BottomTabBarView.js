@@ -6,7 +6,6 @@ import HomeScreen from '../home/HomeScreen';
 import SettingsView from '../settings/SettingsView';
 import MovieCategoriesView from '../movies/MovieCategoriesView';
 import MovieDetailsVeiw from '../movies/MovieDetailsVeiw';
-import HorizontalMoviesView from '../movies/HorizontalMoviesView';
 import MoviesView from '../movies/MoviesView'
 
 const HomeStack = createStackNavigator({
@@ -103,8 +102,8 @@ export default BottomTabBarView = createBottomTabNavigator(
     tabBarOptions: {
       activeBackgroundColor: '#EF6C00',
       inactiveBackgroundColor: 'black',
-      activeTintColor: '#fff',
-      inactiveTintColor: '#c4b96c'
+      activeTintColor: '#000',
+      inactiveTintColor: '#FFF176'
     },
   },
 );

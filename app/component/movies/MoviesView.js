@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import Movie from '../movies/MoviefromGenre';
 
 
 class MoviesView extends React.Component {
@@ -38,49 +39,17 @@ class MoviesView extends React.Component {
 
     const movieData = this.state.movielist;
 
-    return(
-    <View style={[styles.scene, { backgroundColor: '#1a1919' }]}>
-      <FlatList
-        data={movieData}
-        renderItem={({ item }) => <Movie movie={item} navigation={this.props.navigation} />}
-        keyExtractor={item => item.id.toString()}
-      />
-    </View>
+    return (
+      <View style={{ backgroundColor: '#1a1919', flex: 1 }}>
+        <FlatList
+          data={movieData}
+          renderItem={({ item }) => <Movie movie={item} navigation={this.props.navigation} />}
+          keyExtractor={item => item.id.toString()}
+          numColumns={2}
+        />
+      </View>
     );
   }
 };
 
-const Movie = props => (
-  <TouchableOpacity
-    onPress={() => {
-      props.navigation.push('Details', {
-        movie: props.movie,
-      });
-    }}>
-    <View style={styles.item}>
-      <Text style={styles.title}>{props.movie.title}</Text>
-      <Text style={styles.title}>{props.movie.release_date}</Text>
-      <Image
-        style={{ width: 'auto', height: 450 }}
-        source={{ uri: 'http://image.tmdb.org/t/p/w185/' + props.movie.poster_path }}
-      />
-    </View>
-  </TouchableOpacity>
-);
-
 export default withNavigation(MoviesView);
-
-const styles = StyleSheet.create({
-  scene: {
-    flex: 1,
-  },
-  item: {
-    backgroundColor: '#ffffcc',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 32,
-  },
-});

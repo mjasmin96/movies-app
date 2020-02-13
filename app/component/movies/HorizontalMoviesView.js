@@ -21,7 +21,7 @@ export default class HorizontalMoviesView extends React.Component {
               <View
                 style={{ width: 120, backgroundColor: '#00000000', margin: 10 }}>
                 <Image
-                  style={{ width: 'auto', height: 160 }}
+                  style={{ width: 'auto', height: 160, borderRadius: 10 }}
                   source={{ uri: 'http://image.tmdb.org/t/p/w185/' + item.poster_path }}
                 />
                 <Text

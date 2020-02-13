@@ -41,7 +41,7 @@ export default class MovieCategoriesView extends React.Component {
           data={genres}
           renderItem={({ item }) => (
             <TouchableOpacity
-              style={{ flex: 1/3 }}
+              style={{ flex: 1 / 3 }}
               activeOpacity={0.5}
               onPress={() => {
                 console.log("category: ", item);
@@ -59,7 +59,14 @@ export default class MovieCategoriesView extends React.Component {
                 height: 60,
                 backgroundColor: '#CDDC39',
               }}>
-                <Text style={{ flex: 1, textAlignVertical: "center", textAlign: "center", color: '#00695C', fontWeight: 'bold', fontSize: 16 }}>{item.name}</Text>
+                <Text style={{
+                  flex: 1,
+                  textAlignVertical: "center",
+                  textAlign: "center",
+                  color: '#0D47A1',
+                  fontWeight: 'bold',
+                  fontSize: 15
+                }}>{item.name}</Text>
               </View>
             </TouchableOpacity>
           )}
