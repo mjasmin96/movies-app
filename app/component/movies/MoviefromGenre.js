@@ -21,9 +21,9 @@ export default class Movie extends React.Component {
                             numberOfLines={1}
                         >{this.props.movie.title}</Text>
                         <Text style={styles.popularity}>
-                            {this.props.movie.popularity} views</Text>
+                            {this.props.movie.popularity}^</Text>
                     </View>
-                </TouchableOpacity >
+                </TouchableOpacity>
             </View>
         );
     }
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
         width: 150,
         height: 200,
         borderRadius: 12,
-        marginBottom: 6
+        marginBottom: 6,
+        backgroundColor: "#ffffff30"
     }
 });
