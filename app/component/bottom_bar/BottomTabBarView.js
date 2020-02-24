@@ -70,7 +70,7 @@ MovieCategoriesView.navigationOptions = {
 
 const FavoritesStack = createStackNavigator({
   Favorites: FavMovies,
-  MovieDetails: MovieDetailsVeiw
+  FavMovieDetails: MovieDetailsVeiw
 }, {
 
   defaultNavigationOptions: {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, FlatList, ActivityIndicator } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Movie from '../movies/MoviefromGenre';
 
@@ -12,7 +12,6 @@ class MoviesView extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
     const genre = this.props.navigation.getParam('genre');
     fetch('https://api.themoviedb.org/3/discover/movie?api_key=69b647428d7297b0b48fefdcd076b625&language=en-US&with_genres=' + genre.id)
       .then((response) => response.json())
@@ -43,7 +42,8 @@ class MoviesView extends React.Component {
       <View style={{ backgroundColor: '#1a1919', flex: 1 }}>
         <FlatList
           data={movieData}
-          renderItem={({ item }) => <Movie movie={item} navigation={this.props.navigation} />}
+          renderItem={({ item }) => <Movie movie={item} navigation={this.props.navigation}
+          detailsScreen={"Details"}  />}
           keyExtractor={item => item.id.toString()}
           numColumns={2}
         />

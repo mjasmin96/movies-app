@@ -7,7 +7,7 @@ export default class Movie extends React.Component {
             <View style={styles.main} >
                 <TouchableOpacity
                     onPress={() => {
-                        this.props.navigation.push('Details', {
+                        this.props.navigation.push(this.props.detailsScreen, {
                             movie: this.props.movie,
                         });
                     }}>

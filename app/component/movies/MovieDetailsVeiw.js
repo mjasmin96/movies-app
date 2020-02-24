@@ -3,12 +3,16 @@ import { Text, View, ActivityIndicator, StyleSheet, Image, TouchableOpacity, Scr
 import { Card } from 'react-native-shadow-cards';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Moment from 'moment';
+var SharedPreferences = require('react-native-shared-preferences');
 
 export default class MovieDetailsVeiw extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { isLoading: true, iconeName: 'md-heart-empty' }
+    this.state = {
+      isLoading: true,
+      isFavorite: false
+    }
   }
 
   componentDidMount() {
@@ -26,6 +30,18 @@ export default class MovieDetailsVeiw extends React.Component {
       .catch((error) => {
         console.error(error);
       });
+
+    SharedPreferences.getItem("favorites", (value) => {
+      if (value == undefined) {
+        value = "[]";
+      }
+      var favoritesList = JSON.parse(value);
+      var found = favoritesList.find((m) => m.id == movie.id);
+
+      this.setState(
+        { isFavorite: found != undefined }
+      )
+    });
   }
 
   render() {
@@ -73,10 +89,28 @@ export default class MovieDetailsVeiw extends React.Component {
             <Card style={{ padding: 8 }}>
               <Text style={{ color: '#c4b96c', fontSize: 20, fontWeight: 'bold', margin: 5 }}>{movie.title}</Text>
               <TouchableOpacity
-                onPress={() => this.setState(
-                  { iconeName: 'md-heart' }
-                )} style={{ position: 'absolute', marginVertical: 24, marginLeft: 320 }}>
-                <Ionicons name={this.state.iconeName} size={34} />
+                onPress={() => {
+                  const newFavorite = !this.state.isFavorite;
+
+                  SharedPreferences.getItem("favorites", (value) => {
+                    if (value == undefined) {
+                      value = "[]";
+                    }
+                    var favoritesList = JSON.parse(value);
+                    const movie = this.props.navigation.getParam('movie');
+                    if (newFavorite) {
+                      favoritesList.push(movie);
+                    } else {
+                      favoritesList = favoritesList.filter((m) => m.id != movie.id);
+                    }
+                    SharedPreferences.setItem("favorites", JSON.stringify(favoritesList));
+                  });
+
+                  this.setState(
+                    { isFavorite: newFavorite }
+                  )
+                }} style={{ position: 'absolute', marginVertical: 24, right: 10 }}>
+                <Ionicons name={this.state.isFavorite ? "md-heart" : "md-heart-empty"} size={34} />
               </TouchableOpacity>
               <Text style={{ margin: 5 }}>{movie.genres.map((genre, index) => {
                 if (index == movie.genres.length - 1) {
@@ -114,7 +148,7 @@ export default class MovieDetailsVeiw extends React.Component {
           marginVertical: 20
         }}>
           <Text style={{
-            color: '#E57373',
+            color: '#c4b96c',
             fontWeight: 'bold',
             marginHorizontal: 10
           }}>RUNTIME: {timeconverter(movie.runtime)}</Text>
