@@ -6,7 +6,8 @@ import HomeScreen from '../home/HomeScreen';
 import SettingsView from '../settings/SettingsView';
 import MovieCategoriesView from '../movies/MovieCategoriesView';
 import MovieDetailsVeiw from '../movies/MovieDetailsVeiw';
-import MoviesView from '../movies/MoviesView'
+import MoviesView from '../movies/MoviesView';
+import FavMovies from '../Favorites/FavMovies';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -67,6 +68,27 @@ MovieCategoriesView.navigationOptions = {
   title: 'Explore'
 };
 
+const FavoritesStack = createStackNavigator({
+  Favorites: FavMovies,
+  MovieDetails: MovieDetailsVeiw
+}, {
+
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: 'black',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      color: "white"
+    },
+  },
+});
+
+FavMovies.navigationOptions = {
+  title: 'Favorites'
+}
+
 const getTabBarIcon = (navigation, tintColor) => {
   const { routeName } = navigation.state;
   let IconComponent = Ionicons;
@@ -75,6 +97,8 @@ const getTabBarIcon = (navigation, tintColor) => {
     iconName = `md-home`;
   } else if (routeName === 'Settings') {
     iconName = `md-settings`;
+  } else if (routeName === 'Favorites') {
+    iconName = `md-star`;
   } else if (routeName === 'Explore') {
     iconName = `md-list`;
   }
@@ -86,6 +110,7 @@ export default BottomTabBarView = createBottomTabNavigator(
   {
     Home: HomeStack,
     Explore: MoviesStack,
+    Favorites: FavoritesStack,
     Settings: SettingsStack,
   },
   {
