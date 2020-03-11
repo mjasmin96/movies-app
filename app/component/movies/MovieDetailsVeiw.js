@@ -3,6 +3,7 @@ import { Text, View, ActivityIndicator, StyleSheet, Image, TouchableOpacity, Scr
 import { Card } from 'react-native-shadow-cards';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Moment from 'moment';
+import Trailer from '../movies/Trailer';
 var SharedPreferences = require('react-native-shared-preferences');
 
 
@@ -43,18 +44,6 @@ export default class MovieDetailsVeiw extends React.Component {
         { isFavorite: found != undefined }
       )
     });
-
-    fetch('https://api.themoviedb.org/3/movie/' + movie.id + '/videos?api_key=69b647428d7297b0b48fefdcd076b625&language=en-US')
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({
-          isLoading: false,
-          movietrailer: responseJson.results[0],
-        }, function () { })
-      })
-      .catch((error) => {
-        console.error(error);
-      });
   }
 
   render() {
@@ -66,7 +55,7 @@ export default class MovieDetailsVeiw extends React.Component {
         </View>
       )
     }
-
+    console.log(this.state);
     const movie = this.state.moviedetails;
 
     function budgetconverter() {
@@ -98,24 +87,9 @@ export default class MovieDetailsVeiw extends React.Component {
             style={{ aspectRatio: 16 / 11 }}
             source={{ uri: 'http://image.tmdb.org/t/p/w185/' + movie.backdrop_path }}
           />
-          <TouchableOpacity
-            onPress={() => {
-              const movietrailer = this.state.movietrailer;
-              Linking.canOpenURL('https://www.youtube.com/watch?v=' + movietrailer.key)
-                .then((supported) => {
-                  if (!supported) {
-                    console.log("Can't handle url: " + 'https://www.youtube.com/watch?v=' + movietrailer.key);
-                  } else {
-                    return Linking.openURL('https://www.youtube.com/watch?v=' + movietrailer.key);
-                  }
-                })
-                .catch((err) => console.error('An error occurred', err));
-            }}
-            style={{ width: 64, height: 64, position: 'absolute', alignSelf: 'center', top: 86 }}>
-            <Ionicons name={'md-play'} size={64}
-              style={{ position: 'relative', alignSelf: 'center', color: 'white' }}>
-            </Ionicons>
-          </TouchableOpacity>
+          <Trailer
+            navigation={this.props.navigation}
+          />
           <View style={{ position: 'absolute', marginTop: 240, marginHorizontal: 20 }}>
             <Card style={{ padding: 8 }}>
               <Text style={{ color: '#c4b96c', fontSize: 20, fontWeight: 'bold', margin: 5 }}>{movie.title}</Text>
